@@ -10,27 +10,44 @@ export class Character {
     public health: number = ENV_HEALTH,
     public level: number = ENV_LEVEL,
     public isAlive: boolean = true,
-    public damage: number = ENV_INITIAL_DAMAGE, 
+    public damage: number = ENV_INITIAL_DAMAGE,
     public healing: number = ENV_INITIAL_HEALING,
   ) { }
 
 
   attack(character: Character) {
-    character.health -= this.damage;
+
+    if (character == this)
+      throw new Error("A Character cannot Deal Damage to itself");
+
+    character.health -= this.calculateDamage(this, character)
 
     if (character.health <= 0)
       character.isAlive = false
   }
 
-  heal(character: Character) {
+  heal() {
 
-    if (!character.isAlive)
+    if (!this.isAlive)
       throw new Error("Dead characters cannot be healed");
 
-    character.health = this.maxHealingAsPossible(character.health, this.healing)
+    this.health = this.maxHealingAsPossible(this.health, this.healing)
   }
 
-  maxHealingAsPossible(health: number, healing: number) {
+  private maxHealingAsPossible(health: number, healing: number) {
     return Math.min(Math.max(0, health + healing), ENV_HEALTH);
   }
+
+  private calculateDamage(attacker: Character, target: Character): number {
+    let finalDamage: number = attacker.damage
+
+    if (target.level >= (attacker.level + 5))
+      finalDamage -= ((attacker.damage * 50) / 100)
+
+    if (target.level <= (attacker.level - 5))
+      finalDamage += ((attacker.damage * 50) / 100)
+
+    return finalDamage
+  }
+
 }
