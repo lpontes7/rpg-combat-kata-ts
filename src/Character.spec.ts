@@ -1,5 +1,6 @@
-import { Character } from "./Character";
+import { Character } from "./character";
 import { describe, expect, it } from "@jest/globals";
+import { CharacterDistanceType } from './character'
 
 describe("Character", () => {
   //Created
@@ -76,6 +77,70 @@ describe("Character", () => {
     }
     expect(character2.isAlive).toBe(false);
   });
+
+  it("Should attack whit a Character (melee) another Character in initial position", () => {
+    const character1 = new Character();
+    const character2 = new Character();
+    expect(() => character1.attack(character2)).not.toThrow();
+  });
+
+  it("Should attack whit a Character (Ranged) another Character in initial position", () => {
+    const character1 = new Character();
+    character1.typeAndRage = CharacterDistanceType.Ranged
+
+    const character2 = new Character();
+    expect(() => character1.attack(character2)).not.toThrow();
+  });
+
+  it("Should not attack whit a Character (melee) another Character in far position", () => {
+    const character1 = new Character();
+    const character2 = new Character();
+    character2.position = 500
+    expect(() => character1.attack(character2)).toThrow();
+  });
+
+  it("Should not attack whit a Character (Ranged) another Character in in far position", () => {
+    const character1 = new Character();
+    character1.typeAndRage = CharacterDistanceType.Ranged
+
+    const character2 = new Character();
+    character2.position = 500
+    expect(() => character1.attack(character2)).toThrow();
+  });
+
+  it("Should attack whit a Character (melee) another Character in close position and not attack another Character in far position", () => {
+    const character1 = new Character();
+
+    const character2 = new Character();
+    character2.position = 2
+
+    const character3 = new Character();
+    character2.position = 20
+
+    expect(() => character1.attack(character2)).toThrow();
+    expect(() => character1.attack(character3)).not.toThrow();
+  });
+
+  it("Should attack whit a Character (Ranged) another Character in close position and attack another Character in far position ", () => {
+    const character1 = new Character();
+    character1.typeAndRage = CharacterDistanceType.Ranged
+
+    const character2 = new Character();
+    character2.position = 2
+
+    const character3 = new Character();
+    character3.position = 20
+
+    expect(() => character1.attack(character2)).not.toThrow();
+    expect(() => character1.attack(character3)).not.toThrow();
+  });
+
+  it("Should attack whit a Character (melee) another Character in initial position", () => {
+    const character1 = new Character();
+    const character2 = new Character();
+    expect(() => character1.attack(character2)).not.toThrow();
+  });
+
 
   //Heal
 
