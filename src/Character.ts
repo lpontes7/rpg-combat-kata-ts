@@ -2,6 +2,12 @@ const ENV_HEALTH = 1000;
 const ENV_LEVEL = 1
 const ENV_INITIAL_DAMAGE = 100
 const ENV_INITIAL_HEALING = 50
+const ENV_INITIAL_POSITION = 0
+
+export enum CharacterDistanceType {
+  Melee = 2,
+  Ranged = 20,
+}
 
 export class Character {
 
@@ -12,18 +18,20 @@ export class Character {
     public isAlive: boolean = true,
     public damage: number = ENV_INITIAL_DAMAGE,
     public healing: number = ENV_INITIAL_HEALING,
+    public position: number = ENV_INITIAL_POSITION,
+    public typeAndRage: CharacterDistanceType = CharacterDistanceType.Melee
   ) { }
 
+  attack(target: Character) {
 
-  attack(character: Character) {
-
-    if (character == this)
+    if (target == this)
       throw new Error("A Character cannot Deal Damage to itself");
 
-    character.health -= this.calculateDamage(this, character)
+    this.targetDistance(target)
+    target.health -= this.calculateDamage(this, target)
 
-    if (character.health <= 0)
-      character.isAlive = false
+    if (target.health <= 0)
+      target.isAlive = false
   }
 
   heal() {
@@ -50,4 +58,9 @@ export class Character {
     return finalDamage
   }
 
+  private targetDistance(target: Character): void | never {
+    const distance = Math.abs(this.position - target.position);
+    if (distance > this.typeAndRage)
+      throw new Error("Characters must be in range to deal damage to a target.");
+  }
 }
