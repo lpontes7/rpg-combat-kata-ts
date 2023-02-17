@@ -1,6 +1,6 @@
 # RPG COMBAT KATA TS
 
-Challenge on the link : [https://github.com/ardalis/kata-catalog/blob/main/katas/RPG%20Combat.md](RPG-COMBAT-KATA)
+Challenge on the link : [RPG COMBAT](https://github.com/ardalis/kata-catalog/blob/main/katas/RPG%20Combat.md)
 
 ## Scripts
 
