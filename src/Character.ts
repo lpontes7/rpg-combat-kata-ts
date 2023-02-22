@@ -33,7 +33,7 @@ export class Character {
   get health(): number {
     return this._health;
   }
-  set health(value: number) {
+  private set health(value: number) {
     this._health = this.maxAndMinHealth(value)
   }
 
@@ -47,21 +47,21 @@ export class Character {
   get isAlive(): boolean {
     return this._isAlive;
   }
-  set isAlive(value: boolean) {
+  private set isAlive(value: boolean) {
     this._isAlive = value
   }
 
   get damage(): number {
     return this._damage;
   }
-  set damage(value: number) {
+  private set damage(value: number) {
     this._damage = value
   }
 
   get healing(): number {
     return this._healing;
   }
-  set healing(value: number) {
+  private set healing(value: number) {
     this._healing = value
   }
 
@@ -75,7 +75,7 @@ export class Character {
   get characterType(): CharacterType {
     return this._characterType;
   }
-  set characterType(props: CharacterTypeDto) {
+  private set characterType(props: CharacterTypeDto) {
     const character = new CharacterType(props)
     this._characterType = character
   }

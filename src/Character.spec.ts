@@ -215,16 +215,20 @@ describe("Character", () => {
 
   it("Should not have more than the maximum health", () => {
     const character = new Character(mockCharacterTypeMelee);
-    character.health = ENV_HEALTH_MAX + 100
-
+    character.heal(character)
+    
     expect(character.health).toBe(ENV_HEALTH_MAX);
   });
 
   it("Should not have less than the minimum health", () => {
-    const character = new Character(mockCharacterTypeMelee);
-    character.health = ENV_HEALTH_MIN - 100
+    const character1 = new Character(mockCharacterTypeMelee);
+    const character2 = new Character(mockCharacterTypeMelee);
 
-    expect(character.health).toBe(ENV_HEALTH_MIN);
+    while (character1.isAlive){
+      character1.attackCharacter(character2)
+    }
+
+    expect(character2.health).toBe(ENV_HEALTH_MIN);
   });
 
 
