@@ -1,1 +1,1 @@
-console.log('RPG COMBAT KATA START');
+console.log("RPG COMBAT KATA START");
